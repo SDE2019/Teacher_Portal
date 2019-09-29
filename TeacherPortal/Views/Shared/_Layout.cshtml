@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
     <title>@ViewBag.Title - RNSIT</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/style.css")
@@ -61,21 +62,28 @@ body {
             <li class="nav-item" style="left:50%; position:fixed;">
                 <a class="navbar-brand" style="background-color:transparent;">
                     <img style="max-width:30px; margin-top:0px;"
-                         src="~/Content/logo.jpg">
-                    RNSIT
+                         src="~/Content/logo.jpg" >
+                    <text style="color:black">RNSIT</text>
                 </a>
             </li>
         </ul>
         <ul class="nav navbar-nav" style="right:10px; position:absolute;">
-            <li >@Html.Partial("_LoginPartial")</li>
+            <li>@Html.Partial("_LoginPartial")</li>
         </ul>
     </nav>
-        <div id="mySidenav" class="sidenav" style="background-color:#424859; color:white;">
-            <a href="#" style="color:white;">About</a>
-            <a href="#" style="color:white;">Services</a>
-            <a href="#" style="color:white;">Clients</a>
-            <a href="#" style="color:white;">Contact</a>
-        </div>
+    <div id="mySidenav" class="sidenav" style="background-color:#424859; color:white;">
+        <a href="~/Departments/Create" style="color:white;">Departments</a>
+        <a href="~/Designation/create" style="color:white;">Designation</a>
+        <a href="~/Events/Create" style="color:white;">Events</a>
+        <a href="~/Prev_Experience/Create" style="color:white;">Previous Experience</a>
+        <a href="~/Projects/Create" style="color:white;">Projects</a>
+        <a href="~/Qualifications/Create" style="color:white;">Qualifications</a>
+        <a href="~/Publications/Create" style="color:white;">Publications</a>
+        <a href="~/Scripts/Create" style="color:white;">Scripts</a>
+        <a href="~/Students/Create" style="color:white;">Students</a>
+        <a href="~/Subjects/Create" style="color:white;">Subjects</a>
+        <a href="~/Teachers/Create" style="color:white;">Teachers</a>
+    </div>
         
         <div id="main">
            
