@@ -10,6 +10,7 @@ using TeacherPortal.Models;
 
 namespace TeacherPortal.Controllers
 {
+    [Authorize]
     public class TeachersController : Controller
     {
         private TeacherDatabase db = new TeacherDatabase();
