@@ -72,18 +72,16 @@ body {
         </ul>
     </nav>
     <div id="mySidenav" class="sidenav" style="background-color:#424859; color:white;">
-        <a href="~/Departments/Create" style="color:white;">Departments</a>
-        <a href="~/Designation/create" style="color:white;">Designation</a>
-        <a href="~/Events/Create" style="color:white;">Events</a>
-        <a href="~/Prev_Experience/Create" style="color:white;">Previous Experience</a>
-        <a href="~/Projects/Create" style="color:white;">Projects</a>
-        <a href="~/Qualifications/Create" style="color:white;">Qualifications</a>
-        <a href="~/Publications/Create" style="color:white;">Publications</a>
-        <a href="~/Scripts/Create" style="color:white;">Scripts</a>
-        <a href="~/Students/Create" style="color:white;">Students</a>
-        <a href="~/Subjects/Create" style="color:white;">Subjects</a>
-        <a href="~/Teachers/Create" style="color:white;">Teachers</a>
-    </div>
+        @if (User.IsInRole("admin"))
+        {
+            <a href="~/Departments/Index" style="color:white;">Departments</a>
+            <a href="~/Designation/Index" style="color:white;">Designation</a>
+            <a href="~/Students/Create" style="color:white;">Students</a>
+            <a href="~/Subjects/Index" style="color:white;">Subjects</a>
+            <a href="~/Teachers/Create" style="color:white;">Teachers</a>
+        }
+
+        </div>
         
         <div id="main">
            
@@ -93,7 +91,7 @@ body {
         <div class="container body-content">
             @RenderBody()
             
-            <footer style="position:absolute; bottom:0; width:100%; text-align:center; left:0px;">
+            <footer style="position:relative; bottom:0; width:100%; text-align:center; left:0px;">
                 <hr />
                 <p style="justify-content:center">&copy; @DateTime.Now.Year - Aikya Software Wing</p>
             </footer>
