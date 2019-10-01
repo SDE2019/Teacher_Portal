@@ -75,6 +75,11 @@ namespace TeacherPortal.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var userid = UserManager.FindByEmail(model.Email).Id;
+            if (!UserManager.IsEmailConfirmed(userid))
+            {
+                return View("EmailNotConfirmed");
+            }
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -134,7 +139,10 @@ namespace TeacherPortal.Controllers
             }
         }
 
-        //
+        public ActionResult ConfirmPrompt()
+        {
+            return View();
+        }
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
@@ -159,11 +167,11 @@ namespace TeacherPortal.Controllers
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return View("ConfirmPrompt");
                 }
                 AddErrors(result);
             }
