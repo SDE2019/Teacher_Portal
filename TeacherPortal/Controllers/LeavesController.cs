@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -17,7 +18,8 @@ namespace TeacherPortal.Controllers
         // GET: Leaves
         public ActionResult Index()
         {
-            return View(db.Leaves.ToList());
+            List<Leave> L = db.Leaves.Where(l => l.Id == User.Identity.GetUserName()).ToList();
+            return View(L);
         }
 
         // GET: Leaves/Details/5

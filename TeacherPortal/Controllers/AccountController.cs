@@ -99,6 +99,7 @@ namespace TeacherPortal.Controllers
             }
             catch(Exception e)
             {
+                System.Diagnostics.Debug.WriteLine(e);
                 ModelState.AddModelError("", "Invalid login attempt.");
                 return View(model);
             }
