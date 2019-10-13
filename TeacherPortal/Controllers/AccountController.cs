@@ -171,11 +171,10 @@ namespace TeacherPortal.Controllers
                 var user = new ApplicationUser { UserName = model.Id, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
-                var currentUser = UserManager.FindByName(user.UserName);
-                var roleresult = UserManager.AddToRole(currentUser.Id, "faculty");
-
                 if (result.Succeeded)
                 {
+                    var currentUser = UserManager.FindByName(user.UserName);
+                    var roleresult = UserManager.AddToRole(currentUser.Id, "faculty");
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
