@@ -80,6 +80,10 @@ body {
             <a href="~/Subjects/Index" style="color:white;">Subjects</a>
             <a href="~/Teachers/Create" style="color:white;">Teachers</a>
         }
+        @if (User.IsInRole("faculty"))
+        {
+            <a href="~/Leaves/Index" style="color:white;">Leave Portal</a>
+        }
 
         </div>
         
