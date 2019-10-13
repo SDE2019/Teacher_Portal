@@ -18,7 +18,7 @@ namespace TeacherPortal.Controllers
         // GET: Leaves
         public ActionResult Index()
         {
-            List<Leave> L = db.Leaves.Where(l => l.Id == User.Identity.GetUserName()).ToList();
+            List<Leave> L = db.Leaves.Where(l => l.Id == System.Web.HttpContext.Current.User.Identity.Name).ToList();
             return View(L);
         }
 
@@ -130,6 +130,9 @@ namespace TeacherPortal.Controllers
         {
             if (ModelState.IsValid)
             {
+                leave.Id = System.Web.HttpContext.Current.User.Identity.Name;
+                leave.ApprovalStatus = "Pending";
+                leave.LeaveCount = getdays(leave.StartDate, leave.EndDate);
                 db.Leaves.Add(leave);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -149,5 +152,12 @@ namespace TeacherPortal.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [NonAction]
+        public short getdays(DateTime? start, DateTime? end)
+        {
+            return (Int16)(end - start).Value.Days;
+        }
+
     }
 }

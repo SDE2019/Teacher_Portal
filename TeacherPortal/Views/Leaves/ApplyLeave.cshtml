@@ -73,12 +73,10 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script>
         function getcurdatetime() {
-            var today = new Date();
-            var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-            var time = today.getHours() + ":" + today.getMinutes();
-            var dateTime = date + 'T' + time;
+            var dateTime = moment().format('YYYY-MM-DD') + 'T' + moment().format('HH:mm');
             document.getElementById("myDate1").value = dateTime
             document.getElementById("myDate2").value = dateTime
         }
