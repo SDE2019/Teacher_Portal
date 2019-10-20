@@ -73,19 +73,20 @@ body {
     </nav>
     <div id="mySidenav" class="sidenav" style="background-color:#424859; color:white;">
         @if (User.IsInRole("admin"))
-        {
-            <a href="~/Departments/Index" style="color:white;">Departments</a>
-            <a href="~/Designation/Index" style="color:white;">Designation</a>
-            <a href="~/Students/Create" style="color:white;">Students</a>
-            <a href="~/Subjects/Index" style="color:white;">Subjects</a>
-            <a href="~/Teachers/Create" style="color:white;">Teachers</a>
-        }
+    {
+        <a href="~/Departments/Index" style="color:white;">Departments</a>
+        <a href="~/Designations/Index" style="color:white;">Designation</a>
+    //<a href="~/Students/Create" style="color:white;">Students</a>
+    <a href="~/Subjects/Index" style="color:white;">Subjects</a>
+    <a href="~/Teachers/Create" style="color:white;">Teachers</a>
+}
         @if (User.IsInRole("faculty"))
-        {
-            <a href="~/Leaves/Index" style="color:white;">Leave Portal</a>
-        }
+    {
+        <a href="~/Teachers/Details" style="color:white;">Teachers</a>
+        <a href="~/Leaves/Index" style="color:white;">Leave Portal</a>
+}
 
-        </div>
+    </div>
         
         <div id="main">
            
