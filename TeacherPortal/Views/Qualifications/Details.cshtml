@@ -1,50 +1,55 @@
-﻿@model TeacherPortal.Models.Qualification
+﻿@model IEnumerable<TeacherPortal.Models.Qualification>
 
 @{
     ViewBag.Title = "Details";
 }
 
 <h2>Details</h2>
-
-<div>
-    <h4>Qualification</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Teacher.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Teacher.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.University_School)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.University_School)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.YOP)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.YOP)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Specification)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Specification)
-        </dd>
-
-    </dl>
-</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Create New", "Create")
 </p>
+<div>
+    @foreach (var item in Model)
+    {
+
+        <h4>Qualification</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Teacher.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => item.Teacher.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.University_School)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => item.University_School)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.YOP)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => item.YOP)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Specification)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => item.Specification)
+            </dd>
+
+        </dl>
+    }
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    </p>

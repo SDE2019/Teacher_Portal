@@ -1,4 +1,4 @@
-﻿@model TeacherPortal.Models.Qualification
+﻿@model IEnumerable<TeacherPortal.Models.Qualification>
 
 @{
     ViewBag.Title = "Edit";
@@ -9,36 +9,38 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Qualification</h4>
+
+<div class="form-horizontal">
+    <h4>Qualification</h4>
+    @foreach (var item in Model)
+    {
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.TID)
+        @Html.HiddenFor(model => item.TID)
 
-        @Html.HiddenFor(model => model.UG_PG_PHD)
+        @Html.HiddenFor(model => item.UG_PG_PHD)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.University_School, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => item.University_School, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.University_School, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.University_School, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => item.University_School, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => item.University_School, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.YOP, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => item.YOP, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.YOP, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.YOP, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => item.YOP, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => item.YOP, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Specification, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => item.Specification, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Specification, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Specification, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => item.Specification, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => item.Specification, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -47,9 +49,10 @@
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
+    }
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Details")
 </div>

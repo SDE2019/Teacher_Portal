@@ -33,7 +33,7 @@ namespace TeacherPortal.Controllers
             Teacher teacher = db.Teachers.Find(id);
             if (teacher == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Create");
             }
             return View(teacher);
         }
@@ -51,13 +51,14 @@ namespace TeacherPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Photo,Address,DOB,Designation_Id,Pan,Aadhar,Phno,Fingerprint,Dept_Id")] Teacher teacher)
+        public ActionResult Create([Bind(Include = "Name,Photo,Address,DOB,Designation_Id,Pan,Aadhar,Phno,Fingerprint,Dept_Id")] Teacher teacher)
         {
+            teacher.Id = User.Identity.Name;
             if (ModelState.IsValid)
             {
                 db.Teachers.Add(teacher);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
 
             ViewBag.Dept_Id = new SelectList(db.Departments, "Id", "Name", teacher.Dept_Id);

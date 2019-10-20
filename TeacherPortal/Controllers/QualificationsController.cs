@@ -18,29 +18,29 @@ namespace TeacherPortal.Controllers
         // GET: Qualifications
         public ActionResult Index()
         {
-            var qualifications = db.Qualifications.Include(q => q.Teacher);
+            var qualifications = db.Qualifications.Where(q => q.Teacher.Id == User.Identity.Name );
             return View(qualifications.ToList());
         }
 
         // GET: Qualifications/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details()
         {
+            string id = User.Identity.Name;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Qualification qualification = db.Qualifications.Find(id);
-            if (qualification == null)
+            var qualification = db.Qualifications.Where(q => q.TID == id).ToList();
+            if (qualification.Count() == 0)
             {
-                return HttpNotFound();
+                return RedirectToAction("Create");
             }
             return View(qualification);
         }
 
         // GET: Qualifications/Create
         public ActionResult Create()
-        {
-            ViewBag.TID = new SelectList(db.Teachers, "Id", "Name");
+        { 
             return View();
         }
 
@@ -49,32 +49,32 @@ namespace TeacherPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TID,UG_PG_PHD,University_School,YOP,Specification")] Qualification qualification)
+        public ActionResult Create([Bind(Include = "UG_PG_PHD,University_School,YOP,Specification")] Qualification qualification)
         {
+            qualification.TID = User.Identity.Name;
             if (ModelState.IsValid)
             {
                 db.Qualifications.Add(qualification);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
-
-            ViewBag.TID = new SelectList(db.Teachers, "Id", "Name", qualification.TID);
             return View(qualification);
         }
 
         // GET: Qualifications/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit()
         {
+            string id = User.Identity.Name;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Qualification qualification = db.Qualifications.Find(id);
+            var qualification = db.Qualifications.Where(q => q.TID == id).ToList();
             if (qualification == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.TID = new SelectList(db.Teachers, "Id", "Name", qualification.TID);
+            
             return View(qualification);
         }
 
@@ -83,26 +83,28 @@ namespace TeacherPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TID,UG_PG_PHD,University_School,YOP,Specification")] Qualification qualification)
+        public ActionResult Edit([Bind(Include = "UG_PG_PHD,University_School,YOP,Specification")] Qualification qualification)
         {
+            qualification.TID = User.Identity.Name;
             if (ModelState.IsValid)
             {
                 db.Entry(qualification).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
             ViewBag.TID = new SelectList(db.Teachers, "Id", "Name", qualification.TID);
             return View(qualification);
         }
 
         // GET: Qualifications/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete()
         {
+            string id = User.Identity.Name;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Qualification qualification = db.Qualifications.Find(id);
+            var qualification = db.Qualifications.Where(q => q.TID == id).ToList();
             if (qualification == null)
             {
                 return HttpNotFound();
@@ -118,7 +120,7 @@ namespace TeacherPortal.Controllers
             Qualification qualification = db.Qualifications.Find(id);
             db.Qualifications.Remove(qualification);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details");
         }
 
         protected override void Dispose(bool disposing)
