@@ -49,9 +49,8 @@ namespace TeacherPortal.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Id")]
+        public string Id { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -64,6 +63,10 @@ namespace TeacherPortal.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name = "Id")]
+        public string Id { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
