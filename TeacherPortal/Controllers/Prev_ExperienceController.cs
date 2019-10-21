@@ -18,21 +18,22 @@ namespace TeacherPortal.Controllers
         // GET: Prev_Experience
         public ActionResult Index()
         {
-            var prev_Experience = db.Prev_Experience.Include(p => p.Teacher);
+            var prev_Experience = db.Prev_Experience.Where(q => q.Teacher.Id == User.Identity.Name);
             return View(prev_Experience.ToList());
         }
 
         // GET: Prev_Experience/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details()
         {
+            string id = User.Identity.Name;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Prev_Experience prev_Experience = db.Prev_Experience.Find(id);
-            if (prev_Experience == null)
+            var prev_Experience = db.Prev_Experience.Where(q => q.TID == id).ToList();
+            if (prev_Experience.Count() == 0)
             {
-                return HttpNotFound();
+                return RedirectToAction("Create");
             }
             return View(prev_Experience);
         }
@@ -40,7 +41,7 @@ namespace TeacherPortal.Controllers
         // GET: Prev_Experience/Create
         public ActionResult Create()
         {
-            ViewBag.TID = new SelectList(db.Teachers, "Id", "Name");
+            
             return View();
         }
 
@@ -51,30 +52,30 @@ namespace TeacherPortal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Employer,TID,Role,Start_Date,End_Date")] Prev_Experience prev_Experience)
         {
+            prev_Experience.TID = User.Identity.Name;
             if (ModelState.IsValid)
             {
                 db.Prev_Experience.Add(prev_Experience);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
-
-            ViewBag.TID = new SelectList(db.Teachers, "Id", "Name", prev_Experience.TID);
             return View(prev_Experience);
         }
 
         // GET: Prev_Experience/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit()
         {
+            string id = User.Identity.Name;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Prev_Experience prev_Experience = db.Prev_Experience.Find(id);
-            if (prev_Experience == null)
+            var prev_Experience = db.Prev_Experience.Where(q => q.TID == id).ToList();
+            if (prev_Experience.Count() == 0)
             {
                 return HttpNotFound();
             }
-            ViewBag.TID = new SelectList(db.Teachers, "Id", "Name", prev_Experience.TID);
+            
             return View(prev_Experience);
         }
 
@@ -85,25 +86,27 @@ namespace TeacherPortal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Employer,TID,Role,Start_Date,End_Date")] Prev_Experience prev_Experience)
         {
+            prev_Experience.TID = User.Identity.Name;
             if (ModelState.IsValid)
             {
                 db.Entry(prev_Experience).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
-            ViewBag.TID = new SelectList(db.Teachers, "Id", "Name", prev_Experience.TID);
+            
             return View(prev_Experience);
         }
 
         // GET: Prev_Experience/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete()
         {
+            string id = User.Identity.Name;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Prev_Experience prev_Experience = db.Prev_Experience.Find(id);
-            if (prev_Experience == null)
+            var prev_Experience = db.Prev_Experience.Where(q => q.TID == id).ToList();
+            if (prev_Experience.Count() == 0)
             {
                 return HttpNotFound();
             }
@@ -118,7 +121,7 @@ namespace TeacherPortal.Controllers
             Prev_Experience prev_Experience = db.Prev_Experience.Find(id);
             db.Prev_Experience.Remove(prev_Experience);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details");
         }
 
         protected override void Dispose(bool disposing)
