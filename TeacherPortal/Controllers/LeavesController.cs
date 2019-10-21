@@ -132,7 +132,6 @@ namespace TeacherPortal.Controllers
             {
                 leave.Id = System.Web.HttpContext.Current.User.Identity.Name;
                 leave.ApprovalStatus = "Pending";
-                leave.LeaveCount = getdays(leave.StartDate, leave.EndDate);
                 db.Leaves.Add(leave);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -140,10 +139,40 @@ namespace TeacherPortal.Controllers
 
             return View(leave);
         }
+        public ActionResult ApproveLeave()
+        {
+            {
+                //Retrieve only HOD Tuple
+                List<Teacher> T = db.Teachers.Where(l => l.Id == System.Web.HttpContext.Current.User.Identity.Name).ToList();
+                var userTuple = T.FirstOrDefault();
+
+                //Retrieve all tuples belonging to HOD's dept
+                List<Teacher> T_All = db.Teachers.Where(l => l.Dept_Id == T.FirstOrDefault().Dept_Id).ToList();
+
+                //Retrieve Leaves
+                List<Leave> L = new List<Leave>();
+                foreach (Teacher t in T_All)
+                {
+                    L.AddRange(db.Leaves.Where(l => l.Id == t.Id).ToList());
+                }
+                return View(L);
+            }
+        }
 
 
-
-
+        public ActionResult ApproveDetails(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Leave leave = db.Leaves.Find(id);
+            if (leave == null)
+            {
+                return HttpNotFound();
+            }
+            return View(leave);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -153,11 +182,15 @@ namespace TeacherPortal.Controllers
             base.Dispose(disposing);
         }
 
+
+
         [NonAction]
         public short getdays(DateTime? start, DateTime? end)
         {
             return (Int16)(end - start).Value.Days;
         }
+        
+
 
     }
 }

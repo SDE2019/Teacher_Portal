@@ -20,6 +20,7 @@ namespace TeacherPortal.Models
         public virtual DbSet<Designation> Designations { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Leave> Leaves { get; set; }
+        public virtual DbSet<LeaveCount> LeaveCounts { get; set; }
         public virtual DbSet<Prev_Experience> Prev_Experience { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<Publication> Publications { get; set; }
@@ -111,6 +112,10 @@ namespace TeacherPortal.Models
                 .WithRequired(e => e.Teacher)
                 .HasForeignKey(e => e.TID)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Leave>()
+                .Property(e => e.LeaveID)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
         }
     }
 }

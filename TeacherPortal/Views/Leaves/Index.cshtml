@@ -3,13 +3,12 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
+<h2>Leave Portal</h2>
 
 <div>
     @using (Html.BeginForm())
     {
-        <a href="ApplyLeave"><input type="button" value="Apply new leave" class="btn btn-default"></a>
+        @Html.ActionLink("Apply New Leave", "ApplyLeave",null,new { @class = "btn btn-default" })
     }
 </div>
 <br />
@@ -19,6 +18,7 @@
 }
 else
 {
+<h4>Leaves Applied</h4>
 <table class="table">
     <tr>
         <th>

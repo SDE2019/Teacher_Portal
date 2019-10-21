@@ -269,8 +269,10 @@
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\Extended\Leave.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Leave.cs" />
+    <Compile Include="Models\LeaveCount.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Prev_Experience.cs" />
     <Compile Include="Models\Project.cs" />
@@ -457,6 +459,7 @@
     <Content Include="Views\Leaves\Edit.cshtml" />
     <Content Include="Views\Leaves\Index.cshtml" />
     <Content Include="Views\Leaves\ApplyLeave.cshtml" />
+    <Content Include="Views\Leaves\ApproveLeave.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
