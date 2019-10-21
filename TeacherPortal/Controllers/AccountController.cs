@@ -170,6 +170,7 @@ namespace TeacherPortal.Controllers
             {
                 var user = new ApplicationUser
                 {
+                    UserName = model.Id,
                     Id = model.Id,
                     Email = model.Email
                 };
