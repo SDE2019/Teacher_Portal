@@ -50,7 +50,7 @@ namespace TeacherPortal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Employer,TID,Role,Start_Date,End_Date")] Prev_Experience prev_Experience)
+        public ActionResult Create([Bind(Include = "Employer,Role,Start_Date,End_Date")] Prev_Experience prev_Experience)
         {
             prev_Experience.TID = User.Identity.Name;
             if (ModelState.IsValid)
