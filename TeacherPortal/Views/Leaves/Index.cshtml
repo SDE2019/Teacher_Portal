@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TeacherPortal.Models.Leave>
+﻿@model TeacherPortal.Models.LeaveAndDesg
 
 @{
     ViewBag.Title = "Index";
@@ -8,11 +8,15 @@
 <div>
     @using (Html.BeginForm())
     {
-        @Html.ActionLink("Apply New Leave", "ApplyLeave",null,new { @class = "btn btn-default" })
+        @Html.ActionLink("Apply New Leave", "ApplyLeave", null, new { @class = "btn btn-default" })
+        if (Model.desg == "HOD")
+        {
+            @Html.ActionLink("Approve Leave", "ApproveLeave", null, new { @class = "btn btn-default" })
+        }
     }
 </div>
 <br />
-@if (Model.Count() == 0)
+@if (Model.leaves.Count() == 0)
 {
     <h3>No Leaves Applied so far</h3>
 }
@@ -22,23 +26,23 @@ else
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.LeaveID)
+            @Html.DisplayNameFor(model => model.leaves[0].LeaveID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LeaveType)
+            @Html.DisplayNameFor(model => model.leaves[0].LeaveType)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StartDate)
+            @Html.DisplayNameFor(model => model.leaves[0].StartDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EndDate)
+            @Html.DisplayNameFor(model => model.leaves[0].EndDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ApprovalStatus)
+            @Html.DisplayNameFor(model => model.leaves[0].ApprovalStatus)
         </th>
         <th></th>
     </tr>
-    @foreach (var item in Model)
+    @foreach (var item in Model.leaves)
     {
         <tr>
             <td>
@@ -57,7 +61,7 @@ else
                 @Html.DisplayFor(modelItem => item.ApprovalStatus)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.Id })
+                @Html.ActionLink("Details", "Details", new { id = item.LeaveID })
             </td>
         </tr>
     }

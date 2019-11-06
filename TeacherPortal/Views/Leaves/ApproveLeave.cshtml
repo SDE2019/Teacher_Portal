@@ -51,7 +51,7 @@ else
                     @Html.DisplayFor(modelItem => item.ApprovalStatus)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "ApproveDetails", new { id = item.Id })
+                    @Html.ActionLink("Details", "ApproveDetails", new { id = item.LeaveID })
                 </td>
             </tr>
         }

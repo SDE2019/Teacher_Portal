@@ -23,5 +23,7 @@ namespace TeacherPortal.Models
         public int Commuted { get; set; }
 
         public int LWP { get; set; }
+
+        public int ML { get; set; }
     }
 }

@@ -474,6 +474,7 @@
     <Content Include="Views\Leaves\Index.cshtml" />
     <Content Include="Views\Leaves\ApplyLeave.cshtml" />
     <Content Include="Views\Leaves\ApproveLeave.cshtml" />
+    <Content Include="Views\Leaves\ApproveDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

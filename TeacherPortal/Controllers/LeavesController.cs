@@ -18,10 +18,13 @@ namespace TeacherPortal.Controllers
         // GET: Leaves
         public ActionResult Index()
         {
+            LeaveAndDesg LD = new LeaveAndDesg();
             List<Leave> L = db.Leaves.Where(l => l.Id == System.Web.HttpContext.Current.User.Identity.Name).ToList();
-            return View(L);
+            LD.leaves = L;
+            Teacher T = db.Teachers.Where(l => l.Id == System.Web.HttpContext.Current.User.Identity.Name).FirstOrDefault();
+            LD.desg = T.Designation.Name;
+            return View(LD);
         }
-
         // GET: Leaves/Details/5
         public ActionResult Details(string id)
         {
@@ -147,16 +150,16 @@ namespace TeacherPortal.Controllers
                 var userTuple = T.FirstOrDefault();
 
                 //Retrieve all tuples belonging to HOD's dept
-                List<Teacher> T_All = db.Teachers.Where(l => l.Dept_Id == T.FirstOrDefault().Dept_Id).ToList();
+                List<Teacher> T_All = db.Teachers.Where(l => l.Dept_Id == userTuple.Dept_Id).ToList();
 
                 //Retrieve Leaves
                 List<Leave> L = new List<Leave>();
                 foreach (Teacher t in T_All)
                 {
                     L.AddRange(db.Leaves.Where(l => l.Id == t.Id).ToList());
-                }
+                } 
                 return View(L);
-            }
+            }           
         }
 
 
@@ -166,13 +169,29 @@ namespace TeacherPortal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Leave leave = db.Leaves.Find(id);
+            Leave leave = db.Leaves.Find(Convert.ToInt64(id));
             if (leave == null)
             {
                 return HttpNotFound();
             }
             return View(leave);
         }
+
+        [HttpPost]
+        [MultipleButton(Name = "action", Argument = "approve")]
+        public ActionResult Approve(Leave l)
+        {
+            l.ApprovalStatus = "Approved";
+            return RedirectToAction("ApproveLeave");
+        }
+        [HttpPost]
+        [MultipleButton(Name = "action", Argument = "reject")]
+        public ActionResult Reject(Leave l)
+        {
+            l.ApprovalStatus = "Rejected";
+            return RedirectToAction("ApproveLeave");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -185,11 +204,60 @@ namespace TeacherPortal.Controllers
 
 
         [NonAction]
-        public short getdays(DateTime? start, DateTime? end)
+        public int getdays(DateTime? start, DateTime? end)
         {
-            return (Int16)(end - start).Value.Days;
+            return (end - start).Value.Days;
         }
-        
+        [NonAction]
+        public int getholidays(DateTime? start, DateTime? end)
+        {
+            return 0;
+        }
+        [NonAction]
+        public LeaveCount updateLeave(DateTime start, DateTime end, string type)
+        {
+            LeaveCount lc = db.LeaveCounts.Find(System.Web.HttpContext.Current.User.Identity.Name);
+            int days = getdays(start, end);
+            int holidays = getholidays(start, end);
+            switch(type)
+            {
+                case "CL":
+                    if (lc.CL < days)
+                        lc.LWP += days;
+                    else
+                    {
+                        lc.CL -= days;
+                        lc.CL = 0;
+                    }
+                    break;
+                case "EL":
+                    if (lc.EL > (days - holidays))
+                        lc.EL -= (days - holidays);
+                    else
+                    {
+                        lc.LWP = (days - holidays) - lc.EL;
+                        lc.EL = 0;
+                    }
+                    break;
+                case "ML":
+                    if(lc.ML < days)
+                        lc.ML -= days;
+                    else
+                    {
+                        lc.LWP = days - lc.ML;
+                        lc.ML = 0;
+                    }
+
+                    break;
+                case "RH":
+                    lc.RH -= days;
+                    break;
+                case "Commuted":
+                    lc.Commuted -= days;
+                    break;
+            }
+            return lc;
+        }
 
 
     }
