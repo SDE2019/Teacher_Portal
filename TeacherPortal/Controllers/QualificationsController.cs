@@ -70,7 +70,7 @@ namespace TeacherPortal.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var qualification = db.Qualifications.Where(q => q.TID == id).ToList();
-            if (qualification == null)
+            if (qualification.Count() == 0)
             {
                 return HttpNotFound();
             }
@@ -92,7 +92,7 @@ namespace TeacherPortal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Details");
             }
-            ViewBag.TID = new SelectList(db.Teachers, "Id", "Name", qualification.TID);
+            
             return View(qualification);
         }
 
