@@ -73,21 +73,25 @@ body {
     </nav>
     <div id="mySidenav" class="sidenav" style="background-color:#424859; color:white;">
         @if (User.IsInRole("admin"))
-        {
-            <a href="~/Departments/Index" style="color:white;">Departments</a>
-            <a href="~/Designations/Index" style="color:white;">Designation</a>
-            //<a href="~/Students/Create" style="color:white;">Students</a>
-            <a href="~/Subjects/Index" style="color:white;">Subjects</a>
-            <a href="~/Teachers/Create" style="color:white;">Teachers</a>
-        }
+    {
+        <a href="~/Departments/Index" style="color:white;">Departments</a>
+        <a href="~/Designations/Index" style="color:white;">Designation</a>
+    //<a href="~/Students/Create" style="color:white;">Students</a>
+    <a href="~/Subjects/Index" style="color:white;">Subjects</a>
+    <a href="~/Teachers/Create" style="color:white;">Teachers</a>
+}
         @if (User.IsInRole("faculty"))
-        {
-            <a href="~/Teachers/Details" style="color:white;">Teachers</a>
-            <a href="~/Scripts/Details" style="color:white;">Script</a>
-            <a href="~/Prev_Experience/Details" style="color:white;">Previous experience</a>
-            <a href="~/Qualifications/Details" style="color:white;">Qualification</a>
-            <a href="~/Leaves/Index" style="color:white;">Leave Portal</a>
-        }
+    {
+        <a href="~/Teachers/Details" style="color:white;">Profile</a>
+        <a href="~/Qualifications/Details" style="color:white;">Qualification</a>
+        <a href="~/Leaves/Index" style="color:white;">Leave Portal</a>
+        <a href="~/Prev_Experience/Details" style="color:white;">Prev_Experience</a>
+        <a href="~/Projects/Create" style="color:white;">Projects</a>
+        <a href="~/Events/Create" style="color:white;">Events</a>
+        <a href="~/Publications/Create" style="color:white;">Publicaiton</a>
+        <a href="~/Scripts/Create" style="color:white;">Scripts</a>
+
+}
 
     </div>
         
