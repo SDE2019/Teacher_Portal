@@ -80,6 +80,7 @@ body {
     <a href="~/Subjects/Index" style="color:white;">Subjects</a>
     <a href="~/Teachers/Create" style="color:white;">Teachers</a>
 }
+
         @if (User.IsInRole("faculty"))
     {
         <a href="~/Teachers/Details" style="color:white;">Profile</a>
@@ -92,7 +93,21 @@ body {
         <a href="~/Scripts/Create" style="color:white;">Scripts</a>
 
 }
-
+        @if (User.IsInRole("principal"))
+    {
+        <a href="~/Teachers/Index" style="color:white;">Teachers</a>
+        <a href="~/Qualifications/Index" style="color:white;">Qualification</a>
+        <a href="~/Leaves/Index" style="color:white;">Leave Portal</a>
+        <a href="~/Prev_Experience/Index" style="color:white;">Prev_Experience</a>
+        <a href="~/Projects/Index" style="color:white;">Projects</a>
+        <a href="~/Events/Index" style="color:white;">Events</a>
+        <a href="~/Publications/Index" style="color:white;">Publicaiton</a>
+        <a href="~/Scripts/Index" style="color:white;">Scripts</a>
+        <a href="~/Departments/Index" style="color:white;">Departments</a>
+        <a href="~/Designations/Index" style="color:white;">Designation</a>
+         
+         <a href="~/Subjects/Index" style="color:white;">Subjects</a>
+}
     </div>
         
         <div id="main">

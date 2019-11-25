@@ -18,7 +18,7 @@ namespace TeacherPortal.Controllers
         // GET: Qualifications
         public ActionResult Index()
         {
-            var qualifications = db.Qualifications.Where(q => q.Teacher.Id == User.Identity.Name );
+            var qualifications = db.Qualifications.ToList();
             return View(qualifications.ToList());
         }
 

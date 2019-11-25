@@ -18,7 +18,7 @@ namespace TeacherPortal.Controllers
         // GET: Prev_Experience
         public ActionResult Index()
         {
-            var prev_Experience = db.Prev_Experience.Where(q => q.Teacher.Id == User.Identity.Name);
+            var prev_Experience = db.Prev_Experience.ToList();
             return View(prev_Experience.ToList());
         }
 

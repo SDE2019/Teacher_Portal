@@ -45,13 +45,24 @@ namespace TeacherPortal
                 role.Name = "faculty";
                 roleManager.Create(role);
             }
-
-            if (!roleManager.RoleExists("student"))
+            if (!roleManager.RoleExists("principal"))
             {
                 var role = new IdentityRole();
-                role.Name = "student";
+                role.Name = "principal";
                 roleManager.Create(role);
+
+                var user = new ApplicationUser();
+                user.UserName = "principal@rnsit.com";
+                user.Email = "principal@rnsit.com";
+                string password = "P@ssw0rd";
+
+                var user1 = userManager.Create(user, password);
+                if (user1.Succeeded)
+                {
+                    userManager.AddToRole(user.Id, "principal");
+                }
             }
+
 
         }
     }
